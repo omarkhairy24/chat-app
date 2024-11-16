@@ -10,7 +10,7 @@ document.getElementById('login').addEventListener('submit',async function(event)
   };
 
   try{
-    const response = await fetch('http://localhost:3000/user/login', {
+    const response = await fetch('/user/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
