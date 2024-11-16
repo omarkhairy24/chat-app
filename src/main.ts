@@ -12,7 +12,8 @@ async function bootstrap() {
     origin:[
       'http://localhost:8080',
       'http://127.0.0.1:8080',
-      'http://192.168.1.4:8080'
+      'http://192.168.1.4:8080',
+      'https://adaptive-behavior.onrender.com'
 
     ],
     credentials:true
