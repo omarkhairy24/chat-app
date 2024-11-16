@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+<body>
+  <div id="notification-alert" class="notification-alert">
+    <span id="notification-message"></span>
+    <button onclick="closeNotification()">✖</button>
+    
+    <!-- Audio Element for Notification Sound -->
+    <audio id="notification-sound" src="/Napalm Death - You Suffer.mp3" preload="auto"></audio>
+  </div>
+  
+  
+  <div class="container" id="container">
+    <!-- Vertical Sidebar -->
+    <div class="left-sidebar">
+      <img class="icon-circle" src="/logo.png" alt="avatar">
+      <hr style="width:70%;margin-bottom: 0.5em;">
+      <!-- <div class="icon-circle"></div> -->
+      <!-- <img class="icon-circle" src="/plus-104.png" alt="avatar"> -->
+    </div>
+
+    <!-- Sidebar in the middle (Friends, Nitro, Shop, Direct Messages) -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <input type="text" placeholder="Search Friends" class="search-bar" />
+        <hr style="width:100%;margin-bottom: 1em;border: 1px solid black;">
+      </div>
+      <div class="menu">
+        <button id="my-profile">
+          <img class="icon" src="/users/user.png" alt="avatar">
+          <h3>My Profile</h3>
+        </button>
+        <!-- <button>Nitro</button>
+        <button>Shop</button> -->
+      </div>
+      <div class="direct-messages" id="chats">
+        <h3>DIRECT MESSAGES</h3>
+        <ul id="dm-list">
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="main-content-container">
+      
+      <!-- Top Bar Navigation -->
+      <div class="top-bar">
+        <img class="icon" src="/62731-friends-icon-button-computer-like-icons-download-free-image.png" alt="avatar">
+        <h3>Friends</h3>
+        <hr style="height:70%;margin-bottom: 0.5em;margin-left: 0.5em">
+        <button id="online">Online</button>
+        <button id="contacts">All</button>
+        <button id="Pending">Pending</button>
+        <!-- <button>Suggestions</button>
+        <button>Notifications</button> -->
+        <button class="add-friend-btn" id="add-friend-btn">Add Friend</button>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content" id="main-content" onload="getOnline()">
+        <div class="header" id="active-now">
+          <h2>Active Now</h2>
+          <hr style="width:100%; margin-bottom: 100px; margin-left: 0.5em; border: 1px solid black;">
+        </div>
+        <div class="content" id="content">
+          <div class="wumpus-message">
+            <img src="/logo.png" alt="wumpus">
+            <p>No one's around.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/home.js"></script>
+</body>
+</html>
