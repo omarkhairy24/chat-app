@@ -63,4 +63,13 @@ export class UserController {
   getMe(@Request() req:any){
     return this.userService.getMe(req.user.sub || req.cookies.auth_token);
   }
+
+  @UseGuards(AuthGuard)
+  @Patch('/update-password')
+  updatePassword(@Body() body:{oldPassword:string,newPassword:string},@Request() req:any){
+    return this.authService.updatePassword(
+      req.user.sub||req.cookies.auth_token,
+      body.oldPassword,
+      body.newPassword);
+  }
 }

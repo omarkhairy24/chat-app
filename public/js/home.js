@@ -200,7 +200,6 @@ function loadChat(userId) {
 
       sendMessage(receiver_Id, content, images).then(response => {
         if (response) {
-          console.log(receiver_Id,response[0].username);
           
           socket.emit('sendMessage', response[0]);
           socket.emit('notifications',receiver_Id,response[0].username);
@@ -576,6 +575,26 @@ function getMe(){
   })
 }
 
+function updatePassword(oldPassword,newPassword){
+  return fetch('/user/update-password',{
+    method:'PATCH',
+    credentials:'include',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({oldPassword:oldPassword ,newPassword:newPassword})
+  }).then(response=>{
+    if(!response.ok) {
+      alert('something went wrong')
+      throw new Error('something went wrong');
+    }
+    alert('password updated successfully');
+    return response.json()
+  }).catch(error=>{
+    console.error(error)
+  })
+}
+
 document.getElementById('my-profile').addEventListener('click',()=>{
   getMe().then(user=>{
     const mainContent = document.getElementById('main-content');
@@ -640,6 +659,17 @@ document.getElementById('my-profile').addEventListener('click',()=>{
     });
 
     document.getElementById('submitProfileUpdate').addEventListener('click', submitProfileUpdate);
+    document.getElementById('submitPasswordUpdate').addEventListener('click',()=>{
+      const oldPassword = document.getElementById('oldPass').value;
+      const newPassword = document.getElementById('newPass').value;
+      const confirmPassword = document.getElementById('ConfirmPass').value;
+      if(newPassword !== confirmPassword){
+        alert('password and confirm password must match');
+        return;
+      }
+      updatePassword(oldPassword,newPassword)
+
+    })
   })
 })
 

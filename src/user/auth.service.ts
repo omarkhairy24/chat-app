@@ -1,4 +1,4 @@
-import { Injectable,BadRequestException } from '@nestjs/common';
+import { Injectable,BadRequestException, UnauthorizedException } from '@nestjs/common';
 import {DatabaseService} from '../db/db.providers';
 import * as bcrybt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt';
@@ -85,5 +85,16 @@ export class AuthService {
     const payload = { sub:user.rows[0].id, username:user.rows[0].username };
     const accessToken = await this.jwtService.signAsync(payload);
     return [{token:accessToken},{id:user.rows[0].id,email:user.rows[0].email,username:user.rows[0].username}];
+  }
+
+  async updatePassword(userId:string,oldPass:string,newPass:string){
+    const user = await this.db.query(`SELECT id,password FROM users WHERE id = $1`,[userId]);
+    if(user.rows.length === 0) throw new UnauthorizedException();
+    const comparePassword = await bcrybt.compare(oldPass,user.rows[0].password);
+    if(!comparePassword) throw new BadRequestException('incorrect password');
+    const salt = await bcrybt.genSalt();
+    const hash = await bcrybt.hash(newPass,salt);
+    await this.db.query(`UPDATE users SET password = $2 WHERE id = $1`,[userId,hash]);
+    return 'your password was updated successfully';
   }
 }

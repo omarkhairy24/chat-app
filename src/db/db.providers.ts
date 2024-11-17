@@ -14,10 +14,10 @@ export class DatabaseService {
       user: config.get<string>('username') ,
       password: config.get<string>('password'),
       database: config.get<string>('DB_NAME'),
-      ssl:{
-        require:true,
-        ca:fs.readFileSync('./ca.pem').toString()
-      }
+      // ssl:{
+      //   require:true,
+      //   ca:fs.readFileSync('./ca.pem').toString()
+      // }
     });
   }
 
