@@ -34,6 +34,7 @@ document.getElementById('signup').addEventListener('submit',async function(event
             window.location.href = '/views/verify';
         } else {
             const errorData = await response.json();
+            alert('error:'+errorData.message);
             console.error('Signup failed', errorData);
         }
     } catch (error) {

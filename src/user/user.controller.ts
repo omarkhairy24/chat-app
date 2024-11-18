@@ -68,7 +68,7 @@ export class UserController {
   @Patch('/update-password')
   updatePassword(@Body() body:{oldPassword:string,newPassword:string},@Request() req:any){
     return this.authService.updatePassword(
-      req.user.sub||req.cookies.auth_token,
+      req.user.sub || req.cookies.auth_token,
       body.oldPassword,
       body.newPassword);
   }

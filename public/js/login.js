@@ -25,6 +25,7 @@ document.getElementById('login').addEventListener('submit',async function(event)
     }
     else{
       const errorData = await response.json();
+      alert('incorrect email or password');
       console.error('login failed', errorData);
     }
   }catch(error){
