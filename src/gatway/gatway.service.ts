@@ -76,12 +76,12 @@ export class GatwayService implements OnGatewayConnection, OnGatewayDisconnect {
 
 
     @SubscribeMessage('notifications')
-    handleNotification(client: Socket, user_id: any,){
+    handleNotification(client: Socket, user_id: any){
         
         const userId = [...this.onlineUsers.entries()].find(([key,value])=>{
             if(key === user_id[0]) return value
         })
-
+        
         this.server.to(userId).emit('notification', {
             message: `New message from ${user_id[1]}`
         });

@@ -17,7 +17,7 @@ exports.up = (pgm) => {
                 password VARCHAR(250) NOT NULL,
                 otp VARCHAR(255),
                 attempts INTEGER NOT NULL,
-                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
             )
         `)
 };

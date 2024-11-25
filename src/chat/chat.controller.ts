@@ -17,7 +17,7 @@ export class ChatController {
     ])
   )
   async sendMessage(
-    @Body() body:{reciever_id:string,content:string,image:string[]},
+    @Body() body:{group_id:(number | null),reciever_id:string | null,content:string,image:string[]},
     @Request() req:any,
     @UploadedFiles() files:{ image?: Express.Multer.File[] }
   ){  
@@ -26,19 +26,18 @@ export class ChatController {
       body.image = images
     }
     const message = await this.chatService.sendMessage(
-      req.user.sub || req.cookies.auth_token ,body.reciever_id,body.content,body.image
+      req.user.sub || req.cookies.auth_token ,body.group_id ,body.reciever_id,body.content,body.image
     );
     return message
   }
 
-
   @UseGuards(AuthGuard)
-  @Get('/get-chat/:user_id')
+  @Get('/get-chat/:id')
   getChat(
-    @Param('user_id') user_id:string,
+    @Param('id') id:string,
     @Request() req:any
   ){
-    return this.chatService.getChat(req.user.sub || req.cookies.auth_token, user_id);
+    return this.chatService.getChat(req.user.sub || req.cookies.auth_token, id);
   }
 
   @UseGuards(AuthGuard)

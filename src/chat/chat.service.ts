@@ -7,25 +7,44 @@ export class ChatService {
     private db:DatabaseService
   ){}
 
-  async sendMessage(sender_id:string,reciever_id:string,content:string,image:string[]){
+  async sendMessage(sender_id:string,group_id:(number | null),reciever_id:string | null,content:string,image:string[]){
+      if(group_id){
+
+        const message = await this.db.query(
+          `
+            INSERT INTO messages(group_id,sender_id,message,image)
+            VALUES ($1,$2,$3,$4)
+            RETURNING ( SELECT name FROM users WHERE id = $2 )as name,
+            ( SELECT username FROM users WHERE id = $2) as username,
+            ( SELECT image FROM users WHERE id = $2 ) as user_image
+            ,message ,image,TO_CHAR(created_at,'YYYY-MM-DD HH24:MI') as created_at ;
+          `,
+          [group_id,sender_id,content,image]
+        );
+
+        return message.rows;
+      }
+
       let chat = await this.db.query(
-      `SELECT id FROM chats
-       WHERE (userone = $1 AND usertwo = $2)
-          OR (userone = $2 AND usertwo = $1)`,
-      [sender_id, reciever_id]
+        `SELECT id FROM chats
+         WHERE (userone = $1 AND usertwo = $2)
+            OR (userone = $2 AND usertwo = $1)`,
+        [sender_id, reciever_id]
       );
+
+
       if(chat.rows.length === 0) throw new NotFoundException('the user is not in your contacts');
 
       const message = await this.db.query(
-        `
-          INSERT INTO messages(chat_id,sender_id,message,image)
-          VALUES ($1,$2,$3,$4)
-          RETURNING ( SELECT name FROM users WHERE id = $2 )as name,
-          ( SELECT username FROM users WHERE id = $2) as username,
-          ( SELECT image FROM users WHERE id = $2 ) as user_image
-          ,message ,image,TO_CHAR(created_at,'YYYY-MM-DD HH24:MI') as created_at ;
-        `,
-        [chat.rows[0].id,sender_id,content,image]
+          `
+            INSERT INTO messages(chat_id,sender_id,message,image)
+            VALUES ($1,$2,$3,$4)
+            RETURNING ( SELECT name FROM users WHERE id = $2 )as name,
+            ( SELECT username FROM users WHERE id = $2) as username,
+            ( SELECT image FROM users WHERE id = $2 ) as user_image
+            ,message ,image,TO_CHAR(created_at,'YYYY-MM-DD HH24:MI') as created_at ;
+          `,
+          [chat.rows[0].id,sender_id,content,image]
       );
 
       return message.rows;

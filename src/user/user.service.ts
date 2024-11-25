@@ -14,7 +14,7 @@ export class UserService {
   async searchUser(searchQuery:string,me:string){
     const query = await this.db.query(`
         SELECT id,username,name,image FROM users
-        WHERE (username LIKE $1 OR name LIKE $1) 
+        WHERE (username LIKE $1 OR name LIKE $1) AND id != $2 
         AND id NOT IN (
           SELECT DISTINCT users.id
           FROM chats

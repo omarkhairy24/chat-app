@@ -61,4 +61,15 @@ export class PendingService {
         `,[sender,reciever]);
         return `removed`;
     }
+
+    async getSentRequests(sender:string){
+        const query = await this.db.query(`
+                SELECT users.username,users.name,users.image
+                FROM pendings
+                JOIN users ON users.id = pendings.sender
+                WHERE pendings.sender = $1;
+            `,[sender]);
+
+        return query.rows;
+    }
 }

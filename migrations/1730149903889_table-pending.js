@@ -16,7 +16,7 @@ exports.up = (pgm) => {
                 id SERIAL PRIMARY KEY,
                 sender UUID NOT NULL REFERENCES users(id),
                 reciever UUID NOT NULL REFERENCES users(id),
-                CHECK (sender <> reciever)
+                CHECK (sender <> reciever),
                 UNIQUE (sender, reciever)
             )
         `)

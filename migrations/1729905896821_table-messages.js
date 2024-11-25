@@ -13,12 +13,14 @@ exports.up = (pgm) => {
     `
       CREATE TABLE messages(
         id SERIAL PRIMARY KEY,
-        chat_id INTEGER NOT NULL REFERENCES chats(id) ON DELETE CASCADE,
+        chat_id INTEGER REFERENCES chats(id) ON DELETE CASCADE,
+        group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE,
         sender_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         message TEXT,
         image VARCHAR(255)[],
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-        CHECK(message IS NOT NULL OR image IS NOT NULL)
+        CHECK(message IS NOT NULL OR image IS NOT NULL),
+        CHECK(chat_id IS NOT NULL OR group_id IS NOT NULL)
       )
     `
   )

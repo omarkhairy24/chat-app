@@ -9,6 +9,7 @@ import { PendingModule } from './pending/pending.module';
 import { GatwayModule } from './gatway/gatway.module';
 import { ViewsModule } from './views/views.module';
 import { MailModule } from './mail/mail.module';
+import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MailModule } from './mail/mail.module';
     GatwayModule,
     ViewsModule,
     MailModule,
+    GroupsModule,
   ],
   controllers: [AppController],
   providers: [AppService,DatabaseService],

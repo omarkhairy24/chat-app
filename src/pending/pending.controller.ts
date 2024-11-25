@@ -48,4 +48,12 @@ export class PendingController {
         return await this.pendingService.removePending(req.user.sub|| req.cookies.auth_token, body.sender);
     }
 
+    @UseGuards(AuthGuard)
+    @Get('/sent-requests')
+    async getSentRequests(
+        @Request() req:any
+    ){
+        return await this.pendingService.getSentRequests(req.user.sub || req.cookies.auth_token);
+    }
+
 }
