@@ -1,4 +1,4 @@
-import { Injectable,BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Injectable,BadRequestException, UnauthorizedException, NotAcceptableException } from '@nestjs/common';
 import {DatabaseService} from '../db/db.providers';
 import * as bcrybt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt';
@@ -18,6 +18,8 @@ export class AuthService {
     if(checkEmail.rows.length > 0) throw new BadRequestException('this email already in use')
       const checkUsername = await this.db.query(`SELECT username FROM users WHERE username = $1`,[username])
     if(checkUsername.rows.length > 0) throw new BadRequestException('this username already in use')
+    
+    if(password.length > 8) throw new NotAcceptableException('password must be at least 8 characters long');
 
     const attempts = 3
     const salt = await bcrybt.genSalt();
