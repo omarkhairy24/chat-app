@@ -19,7 +19,7 @@ export class AuthService {
       const checkUsername = await this.db.query(`SELECT username FROM users WHERE username = $1`,[username])
     if(checkUsername.rows.length > 0) throw new BadRequestException('this username already in use')
     
-    if(password.length < 8) throw new NotAcceptableException('password must be at least 8 characters long');
+    if(password.length < 8) throw new NotAcceptableException(' password must be at least 8 characters long. ');
 
     const attempts = 3
     const salt = await bcrybt.genSalt();

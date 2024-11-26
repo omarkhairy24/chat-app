@@ -40,6 +40,12 @@ export class UserController {
      });
   }
 
+  @Post('/logout')
+    async logout(@Res() res: Response) {
+      res.clearCookie('auth_token', { httpOnly: true });
+      return res.status(200).json({ message: 'Logout successful' });
+  }
+
   @UseGuards(AuthGuard)
   @Post('/search')
   async search(@Body() body:{query:string},@Request() req:any){

@@ -1173,3 +1173,24 @@ async function creategroup() {
     alert('An error occurred while creating the group.');
   }
 }
+
+function logout() {
+  console.log('Logout button clicked');
+  return fetch('/user/logout', {
+    method: 'POST',
+    credentials: 'include',
+  })
+    .then((response) => {
+      if (!response.ok) {
+        alert('Something went wrong during logout');
+        throw new Error('Failed to logout. Response not OK.');
+      }
+      window.location.href = '/views/welcome';
+    })
+    .catch((error) => {
+      console.error('Error during logout:', error);
+      alert(`Error during logout: ${error.message}`);
+    });
+}
+
+document.getElementById('logout-btn').addEventListener('click', () => logout());

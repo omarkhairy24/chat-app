@@ -38,6 +38,13 @@ body {
     color: #b9bbbe;
 }
 
+.welcome-content img {
+    width: 400px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
 .button-group {
     display: flex;
     justify-content: center;

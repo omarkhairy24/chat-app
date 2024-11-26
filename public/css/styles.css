@@ -44,6 +44,22 @@ body {
   background-color: #4752C4;
 }
 
+
+.icon-circle-logout-button {
+  width: 50px;
+  height: 50px;
+  /* background-color: #5865F2; */
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.logout-button {
+  position: absolute;
+  bottom: 20px;
+}
+
 /* New Sidebar */
 .sidebar {
   width: 250px;

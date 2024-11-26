@@ -1,30 +1,38 @@
-import { Controller,Get,Res,Render, Request } from '@nestjs/common';
+import { Controller,Get,Res,Render, Request, Post } from '@nestjs/common';
 
 @Controller('views')
 export class ViewsController {
 
     @Get('/welcome')
-    @Render('index')
-    welcome(){
-        return { title: 'Welcome'};
+    welcome(@Request() req:any,@Res() res:any){
+        if(req.cookies?.auth_token) {
+            return res.render('home',{title:'Home Page'});
+        }
+        return res.render('index',{title:'welcome'});
     }
 
     @Get('/signup')
-    @Render('signup')
-    GetSignup(){
-        return;
+    GetSignup(@Request() req:any,@Res() res:any){
+        if(req.cookies?.auth_token) {
+            return res.render('home',{title:'Home Page'});
+        }
+        return res.render('signup',{title:'signup'});
     }
 
     @Get('/verify')
-    @Render('verify')
-    GetVerify(){
-        return;
+    GetVerify(@Request() req:any,@Res() res:any){
+        if(req.cookies?.auth_token) {
+            return res.render('home',{title:'Home Page'});
+        }
+        return res.render('verify',{title:'verify'});
     }
 
     @Get('/login')
-    @Render('login')
-    getLogin(){
-        return;
+    getLogin(@Request() req:any,@Res() res:any){
+        if(req.cookies?.auth_token) {
+            return res.render('home',{title:'Home Page'});
+        }
+        return res.render('login',{title:'login'});
     }
 
     @Get('/home')
@@ -34,4 +42,5 @@ export class ViewsController {
         }
         return res.render('home',{title:'Home Page'});
     }
+    
 }
